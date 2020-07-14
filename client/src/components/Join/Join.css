@@ -47,7 +47,9 @@ html, body {
   border-radius: 5px;
   display: inline-block;
   border: none;
+  font-weight: bold;
   width: 100%;
+  font-weight: bold;
 }
 
 .mt-20 {

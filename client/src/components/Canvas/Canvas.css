@@ -1,0 +1,23 @@
+.canvas-container {
+  background: #ffffff;
+}
+
+.buttonsRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonsRow button {
+  background: #29ff8b;
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px;
+  display: inline-block;
+  border: none;
+}
+
+.buttonsRow .clearButton {
+  background: #ff4747;
+}

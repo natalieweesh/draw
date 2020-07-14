@@ -1,0 +1,19 @@
+.game {
+  background: #e0e2e4;
+  height: 85%;
+  margin-left: 50px;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+}
+
+.gameOver {
+  padding: 1rem;
+  overflow: auto;
+  flex: auto;
+  width: 100%;
+}
+
+.sendButtonSmall {
+  width: auto;
+}

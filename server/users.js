@@ -1,4 +1,4 @@
-const users = [];
+let users = [];
 
 const addUser = ({ id, name, room }) => {
   name = name.trim().toLowerCase();
@@ -9,7 +9,12 @@ const addUser = ({ id, name, room }) => {
     return { error: 'Username is taken' };
   }
 
-  const user = { id, name, room };
+  const usersInRoom = getUsersInRoom(room).length;
+  const user = { id, name, room,
+    readyToPlay: false,
+    orderIndex: usersInRoom,
+    answerSubmitted: false,
+  };
   users.push(user);
   return { user };
 }
@@ -27,4 +32,21 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom };
+const setReadyToPlay = (id) => {
+  console.log('id', id)
+  let myUser = users.find((user) => {
+    user.id === id
+  })
+  users.find((user) => user.id === id).readyToPlay = true;
+  console.log(users.find((user) => user.id === id).readyToPlay)
+  console.log('myuser', myUser)
+}
+
+const checkAllReadyToPlay = (room) => {
+  const usersInRoom = users.filter((user) => user.room === room).length;
+  const usersReadyToPlay = users.filter((user) => user.room === room && user.readyToPlay).length;
+  console.log('all players in room are ready to play', usersInRoom === usersReadyToPlay)
+  return usersInRoom === usersReadyToPlay;
+}
+
+module.exports = { addUser, removeUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay };
