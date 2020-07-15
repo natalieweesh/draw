@@ -11,10 +11,10 @@ class Canvas extends React.Component {
     if (this.props.json) {
       console.log('the id', this.props.id)
       console.log("THE JSON", this.props.json)
-      this.state.canvas = new fabric.Canvas(this.props.id, {width: 350, height: 350, backgroundColor: 'white'})
+      this.state.canvas = new fabric.Canvas(this.props.id, {width: 300, height: 300, backgroundColor: 'white'})
       this.state.canvas.loadFromJSON(this.props.json)
     } else {
-      this.state.canvas = new fabric.Canvas(this.props.id, {isDrawingMode: true, width: 350, height: 350, backgroundColor: 'white'});
+      this.state.canvas = new fabric.Canvas(this.props.id, {isDrawingMode: true, width: 300, height: 300, backgroundColor: 'white'});
     }
   }
 
