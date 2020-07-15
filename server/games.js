@@ -29,6 +29,18 @@ const addGame = (room, users) => {
   return games;
 }
 
+const restartGame = (room) => {
+  const gameToRemove = games.findIndex((game) => game.id == room);
+  console.log('game to remove', gameToRemove)
+  if (gameToRemove === -1) {
+    return
+  }
+  console.log('games length', games.length)
+  games.splice(gameToRemove, 1);
+  console.log('games length after', games.length)
+  return games;
+}
+
 const getGame = (id) => games.find((game) => game.id === id);
 
 const updateCard = (room, word, startTurnIndex, numOfUsers) => {
@@ -60,4 +72,4 @@ const updateCard = (room, word, startTurnIndex, numOfUsers) => {
   return game
 }
 
-module.exports = { addGame, getGame, updateCard };
+module.exports = { addGame, getGame, updateCard, restartGame };

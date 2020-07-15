@@ -22,22 +22,25 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
     }
   }, [finishedGame])
   const submit = (event) => {
-    submitWord(event, word, card.startTurnIndex)
-    setSubmitted(true);
+    event.preventDefault()
+    if (word.trim().length > 0) {
+      submitWord(event, word, card.startTurnIndex)
+      setSubmitted(true);
+    }
   }
   return (
     <div className="container game">
       {finishedGame ? (
         <div className="gameOver">
           {game.map((card, j) => {
-            return <div>
-              <h3>{`${users.find((user) => user.orderIndex === card.startTurnIndex).name}'s chain:`}</h3>
+            return <div className='mb-20'>
+              <h1>{`${users.find((user) => user.orderIndex === card.startTurnIndex).name}'s chain:`}</h1>
               <ol>
               {card.steps.map((step, i) => {
                 if (step.includes('3.6.3')) {
                   return <li><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></li>
                 } else {
-                  return <li>{step}</li>
+                  return <li><span>{step}</span></li>
                 }
               })}
             </ol></div>
@@ -54,7 +57,7 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
             {previousStep.includes('start by writing') ? '' : `now transform this into a ${nextStep === 'word' ? `word or phrase` : nextStep}:`}
             {previousStep.includes('3.6.3') ? (
               <Canvas id='previous-drawing' json={previousStep} />
-            ) : (<p>{previousStep}</p>)}
+            ) : (<p className="previousStep">{previousStep}</p>)}
             
             {nextStep === 'word' && (
               <form className="form">

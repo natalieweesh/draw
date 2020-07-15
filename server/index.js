@@ -4,7 +4,7 @@ const http = require('http');
 const cors = require('cors');
 
 const { addUser, removeUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay } = require('./users.js');
-const { addGame, getGame, updateCard } = require('./games.js');
+const { addGame, getGame, updateCard, restartGame } = require('./games.js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -91,8 +91,17 @@ io.on('connection', (socket) => {
 
   socket.on('initiateGame', (callback) => {
     const user = getUser(socket.id);
-    console.log('user room', user.room)
     const games = addGame(user.room, getUsersInRoom(user.room));
+    if (!!games) {
+      callback();
+    }
+  })
+
+  socket.on('restartGame', (callback) => {
+    const user = getUser(socket.id);
+    restartGame(user.room);
+    const games = addGame(user.room, getUsersInRoom(user.room))
+    io.to(user.room).emit('gameRestarted', {room: user.room})
     if (!!games) {
       callback();
     }

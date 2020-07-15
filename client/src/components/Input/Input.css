@@ -1,12 +1,14 @@
 .form {
   display: flex;
   border-top: 2px solid #D3D3D3;
+  background: white;
+  justify-content: space-between;
 }
 
 .input {
   border: none;
   border-radius: 0;
-  padding: 5%;
+  padding: 1rem;
   width: 80%;
   font-size: 1.2em;
 }
@@ -24,5 +26,6 @@ input:focus, textarea:focus, select:focus{
   display: inline-block;
   border: none;
   width: 20%;
+  height: 100%;
   font-weight: bold;
 }

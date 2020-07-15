@@ -22,6 +22,7 @@
   flex-direction: column;
   width: 15%;
   height: 60%;
+  align-items: center;
 }
 
 .startButton {
@@ -48,6 +49,7 @@
   }
   .sideContainer {
     width: 25%;
+    margin-top: 2rem;
   }
   .startButton {
     width: auto;

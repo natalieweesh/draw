@@ -30,6 +30,11 @@ class Canvas extends React.Component {
           <button className="clearButton" onClick={() => {
             this.state.canvas.clear();
           }}>clear</button>
+          <button className="undoButton" onClick={() => {
+            let prevState = this.state.canvas.toJSON();
+            prevState.objects.splice(prevState.objects.length - 1, 1)
+            this.state.canvas.loadFromJSON(prevState)
+          }}>undo</button>
           <button onClick={(e) => {
             console.log('drawing to save:', JSON.stringify(this.state.canvas.toJSON()))
             submitImage(e, JSON.stringify(this.state.canvas.toJSON()))

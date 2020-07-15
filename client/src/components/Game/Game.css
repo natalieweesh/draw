@@ -19,7 +19,24 @@
   width: auto;
 }
 
+.previousStep {
+  width: 300px;
+}
+
+.gameOver ol li {
+  margin: 1rem 0;
+}
+.gameOver ol li span {
+  font-size: 1.5rem;
+}
+.mb-20 {
+  margin-bottom: 4rem;
+}
+
 @media (max-width: 1000px) {
+  .previousStep {
+    width: auto;
+  }
   .game {
     width: 90%;
     flex-grow: 1;

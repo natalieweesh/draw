@@ -70,6 +70,12 @@ const Chat = ({ location }) => {
         }
       }
     })
+    socket.on('gameRestarted', () => {
+      console.log("GAME RESTARTED")
+      setFinishedGame(false)
+      setNewRound(false)
+      setCurrentGame([])
+    })
   })
 
   useEffect(() => {
@@ -80,13 +86,19 @@ const Chat = ({ location }) => {
         socket.emit('fetchGame', () => {
           console.log('done fetching game')
         })
-      //  if (!!game && !currentGame) {
-      //   console.log("GAME", game)
-      //   setCurrentGame(game)
-      // } console.log('done setting game', game)
       })
     })
   }, [currentGame, setCurrentGame])
+
+  const restartGame = (event) => {
+    event.preventDefault();
+    socket.emit('restartGame', () => {
+      console.log('done restarting game, now fetching game')
+      socket.emit('fetchGame', () => {
+        console.log('done fetching game')
+      })
+    })
+  }
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -129,6 +141,7 @@ const Chat = ({ location }) => {
         <TextContainer users={users} user={user} />
         <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>
       </div>}
+      {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}
       <div className="container">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />

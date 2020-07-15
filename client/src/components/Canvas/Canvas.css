@@ -10,7 +10,6 @@
 
 .buttonsRow button {
   background: #29ff8b;
-  color: #fff !important;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: bold;
@@ -21,6 +20,12 @@
 
 .buttonsRow .clearButton {
   background: #ff4747;
+  color: white;
+}
+
+.buttonsRow .undoButton {
+  background: orange;
+  color: white;
 }
 
 .no-draw .upper-canvas {
