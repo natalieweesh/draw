@@ -1,11 +1,16 @@
 html, body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Balsamiq Sans', 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
+  font-size: 11px;
+}
+input[type=text], input[type=submit], button {
+  font-family: 'Balsamiq Sans', 'Roboto', sans-serif;
+  font-size: 11px;
 }
 
 #root {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 * {
@@ -16,7 +21,7 @@ html, body {
   display: flex;
   justify-content: center;
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
   align-items: center;
   background-color: #1A1A1D;
 }
@@ -56,18 +61,12 @@ html, body {
   margin-top: 20px;
 }
 
-@media (min-width: 320px) and (max-width: 480px) {
-  .joinOuterContainer {
-    height: 100%;
-  }
-
-  .joinInnerContainer {
-    width: 90%;
-  }
-
-
-}
-
 button:focus {
   outline: 0;
+}
+
+@media (max-width: 1000px) {
+  .joinInnerContainer {
+    width: 70%;
+  }
 }
