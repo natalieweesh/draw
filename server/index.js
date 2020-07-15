@@ -14,6 +14,12 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+const corsOptions = {
+  origin: 'https://netlify.com',
+  optionsSuccessStatus: 200
+}
+app.options('*', cors())
+app.use(cors(corsOptions));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -27,7 +33,6 @@ app.use(function(req, res, next) {
   next();
 
 });
-app.use(cors());
 app.use(router);
 
 io.on('connection', (socket) => {

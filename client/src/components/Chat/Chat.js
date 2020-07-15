@@ -32,8 +32,8 @@ const Chat = ({ location }) => {
     socket = io(ENDPOINT);
     console.log(socket)
 
-    setName(name);
-    setRoom(room); 
+    setName(name.trim().toLowerCase());
+    setRoom(room.trim().toLowerCase());
 
     socket.emit('join', { name, room }, () => {
     });
@@ -134,7 +134,7 @@ const Chat = ({ location }) => {
         <Messages messages={messages} name={name} />
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      {currentGame.length > 0 ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} user={user} submitWord={submitWord} users={users} /> : null}
+      {currentGame.length > 0 ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} submitWord={submitWord} user={user} users={users} /> : null}
     </div>
   )   
 }
