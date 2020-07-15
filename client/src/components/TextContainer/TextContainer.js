@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 
 import onlineIcon from '../../icons/onlineIcon.png';
 

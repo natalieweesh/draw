@@ -3,7 +3,7 @@ import Canvas from '../Canvas/Canvas';
 import './Game.css';
 
 const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
-  const card = game.find((card) => card.currentTurnIndex == user.orderIndex);
+  const card = game.find((card) => card.currentTurnIndex === user.orderIndex);
   const previousStep = card.steps.length > 0 ? card.steps[card.steps.length - 1] : 'start by writing a random word or phrase!';
   const nextStep = card.steps.length % 2 === 0 ? 'word' : 'drawing';
   const [word, setWord] = useState('');
