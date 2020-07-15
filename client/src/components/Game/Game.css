@@ -33,4 +33,7 @@
   .sendButtonSmall {
     width: 20%;
   }
+  .gameOver ol {
+    padding-left: 1rem;
+  }
 }
