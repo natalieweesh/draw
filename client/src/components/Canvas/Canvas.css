@@ -22,3 +22,7 @@
 .buttonsRow .clearButton {
   background: #ff4747;
 }
+
+.no-draw .upper-canvas {
+  pointer-events: none;
+}

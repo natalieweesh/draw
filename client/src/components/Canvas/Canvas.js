@@ -19,9 +19,9 @@ class Canvas extends React.Component {
   }
 
   render() {
-    const { submitImage, json, id } = this.props;
+    const { submitImage, json, id, className } = this.props;
    
-    return <div className="textContainer">
+    return <div className={`textContainer ${className}`}>
       <canvas id={id} />
       {json ? (
          null

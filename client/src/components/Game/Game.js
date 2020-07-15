@@ -35,7 +35,7 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
               <ol>
               {card.steps.map((step, i) => {
                 if (step.includes('3.6.3')) {
-                  return <li><Canvas id={`${j}-canvas-${i}`} json={step} /></li>
+                  return <li><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></li>
                 } else {
                   return <li>{step}</li>
                 }

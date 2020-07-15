@@ -23,8 +23,8 @@ const Chat = ({ location }) => {
   const [finishedGame, setFinishedGame] = useState(false);
 
   // TODO: change this for prod / dev
-  // const ENDPOINT = 'localhost:5000';
-  const ENDPOINT = 'https://react-simple-chat-app.herokuapp.com/';
+  const ENDPOINT = 'localhost:5000';
+  // const ENDPOINT = 'https://react-simple-chat-app.herokuapp.com/';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
