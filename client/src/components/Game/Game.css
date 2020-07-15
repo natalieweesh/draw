@@ -30,4 +30,7 @@
   .game > div {
     min-width: 90%;
   }
+  .sendButtonSmall {
+    width: 20%;
+  }
 }

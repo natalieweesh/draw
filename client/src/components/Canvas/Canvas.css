@@ -5,6 +5,7 @@
 .buttonsRow {
   display: flex;
   justify-content: space-between;
+  max-width: 350px;
 }
 
 .buttonsRow button {

@@ -11,10 +11,10 @@ class Canvas extends React.Component {
     if (this.props.json) {
       console.log('the id', this.props.id)
       console.log("THE JSON", this.props.json)
-      this.state.canvas = new fabric.Canvas(this.props.id, {width: 400, height: 400, backgroundColor: 'white'})
+      this.state.canvas = new fabric.Canvas(this.props.id, {width: 350, height: 350, backgroundColor: 'white'})
       this.state.canvas.loadFromJSON(this.props.json)
     } else {
-      this.state.canvas = new fabric.Canvas(this.props.id, {isDrawingMode: true, width: 400, height: 400, backgroundColor: 'white'});
+      this.state.canvas = new fabric.Canvas(this.props.id, {isDrawingMode: true, width: 350, height: 350, backgroundColor: 'white'});
     }
   }
 
@@ -33,7 +33,7 @@ class Canvas extends React.Component {
           <button onClick={(e) => {
             console.log('drawing to save:', JSON.stringify(this.state.canvas.toJSON()))
             submitImage(e, JSON.stringify(this.state.canvas.toJSON()))
-          }}>save drawing</button>
+          }}>submit drawing</button>
         </div>
       )}
     </div>
