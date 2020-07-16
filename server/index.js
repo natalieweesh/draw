@@ -15,7 +15,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const corsOptions = {
-  origin: 'https://netlify.com',
+  origin: 'http://draw.nataliewee.com',
   optionsSuccessStatus: 200
 }
 app.options('*', cors())
