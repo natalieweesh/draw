@@ -29,6 +29,19 @@
     <title>Telephone Pictionary</title>
   </head>
   <body>
+    <script src="%PUBLIC_URL%/NoSleep.min.js"></script>
+    <script>
+      var noSleep = new NoSleep();
+
+      var wakeLockEnabled = false;
+      document.addEventListener('click', function() {
+        if (!wakeLockEnabled) {
+          console.log('enable wake lock now!')
+          noSleep.enable(); // keep the screen on!
+          wakeLockEnabled = true;
+        }
+      }, false);
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
