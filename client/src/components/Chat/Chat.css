@@ -17,6 +17,10 @@
   min-height: 400px;
 }
 
+.max-height {
+  max-height: 600px;
+}
+
 .sideContainer {
   display: flex;
   flex-direction: column;
@@ -46,6 +50,9 @@
     width: 90%;
     min-height: 500px;
     margin: 2rem 0;
+  }
+  .max-height {
+    max-height: 500px;
   }
   .sideContainer {
     width: 25%;
