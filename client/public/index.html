@@ -29,21 +29,6 @@
     <title>Telephone Pictionary</title>
   </head>
   <body>
-    <script src="%PUBLIC_URL%/NoSleep.min.js"></script>
-    <script>
-      var noSleep = new NoSleep();
-
-      document.addEventListener('click', function() {
-        noSleep.disable();
-        noSleep = new NoSleep()
-        noSleep.enable();
-      }, false);
-      document.addEventListener('visibilitychange', function() {
-        noSleep.disable();
-        noSleep = new NoSleep()
-        noSleep.enable();
-      }, false);
-    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
