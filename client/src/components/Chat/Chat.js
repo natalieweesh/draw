@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
-import StayAwake from 'stayawake.js';
+
 import './Chat.css';
 
 import InfoBar from '../InfoBar/InfoBar';
@@ -57,8 +57,6 @@ const Chat = ({ location }) => {
   }, [messages]);
 
   useEffect(() => {
-    StayAwake.init();
-    StayAwake.enable();
     socket.on('gameStatus', ({ game }) => {
       if (currentGame.length === 0 && !!game) {
         setCurrentGame(game.cards);
