@@ -34,6 +34,11 @@ app.use(function(req, res, next) {
 
 });
 app.use(router);
+app.get("/status", (req, res) => {
+  res.status(200).send({
+    success: true
+  })
+})
 
 io.on('connection', (socket) => {
   console.log('We have a new connection!!!');
