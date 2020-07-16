@@ -148,6 +148,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     try {
       const user = removeUser(socket.id);
+      console.log('disconnect user', socket.id)
 
       if (user) {
         io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
@@ -156,6 +157,14 @@ io.on('connection', (socket) => {
       console.log('error in disconnect socket', e)
     }
   });
+
+  socket.on('reconnect', () => {
+    try {
+      console.log('reconnect now!', socket.id)
+    } catch (e) {
+      console.log('error in reconnect socket', e)
+    }
+  })
 })
 
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
