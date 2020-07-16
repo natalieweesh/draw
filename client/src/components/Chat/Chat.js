@@ -30,7 +30,6 @@ const Chat = ({ location }) => {
     const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
-    console.log(socket)
 
     setName(name.trim().toLowerCase());
     setRoom(room.trim().toLowerCase());
@@ -59,7 +58,6 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.on('gameStatus', ({ game }) => {
-      console.log('got this game status!', game)
       if (currentGame.length === 0 && !!game) {
         setCurrentGame(game.cards);
         if (newRound !== game.newRound) {
@@ -71,20 +69,16 @@ const Chat = ({ location }) => {
       }
     })
     socket.on('gameRestarted', () => {
-      console.log("GAME RESTARTED")
       setFinishedGame(false)
       setNewRound(false)
       setCurrentGame([])
     })
-  })
+  }, [])
 
   useEffect(() => {
     socket.on('startGame', ({ users }) => {
-      console.log("LET THE GAME BEGIN!")
       socket.emit('initiateGame', () => {
-        console.log('done emitting initiategame');
         socket.emit('fetchGame', () => {
-          console.log('done fetching game')
         })
       })
     })
@@ -93,9 +87,7 @@ const Chat = ({ location }) => {
   const restartGame = (event) => {
     event.preventDefault();
     socket.emit('restartGame', () => {
-      console.log('done restarting game, now fetching game')
       socket.emit('fetchGame', () => {
-        console.log('done fetching game')
       })
     })
   }
@@ -118,7 +110,6 @@ const Chat = ({ location }) => {
         setNewRound(false)
       }
       socket.emit('submitWord', {word, startTurnIndex}, () => {
-        console.log('done submitting word')
       })
     }
   }
@@ -129,7 +120,6 @@ const Chat = ({ location }) => {
     event.preventDefault();
 
     socket.emit('setReadyToPlay', () => {
-      console.log('set ready to play is done')
     })
   }
 

@@ -9,8 +9,6 @@ class Canvas extends React.Component {
   }
   componentDidMount() {
     if (this.props.json) {
-      console.log('the id', this.props.id)
-      console.log("THE JSON", this.props.json)
       this.state.canvas = new fabric.Canvas(this.props.id, {width: 300, height: 300, backgroundColor: 'white'})
       this.state.canvas.loadFromJSON(this.props.json)
     } else {
@@ -36,7 +34,6 @@ class Canvas extends React.Component {
             this.state.canvas.loadFromJSON(prevState)
           }}>undo</button>
           <button onClick={(e) => {
-            console.log('drawing to save:', JSON.stringify(this.state.canvas.toJSON()))
             submitImage(e, JSON.stringify(this.state.canvas.toJSON()))
           }}>submit drawing</button>
         </div>
