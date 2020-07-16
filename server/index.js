@@ -44,89 +44,117 @@ io.on('connection', (socket) => {
   console.log('We have a new connection!!!');
   
   socket.on('join', ({ name, room }, callback) => {
-    const { error, user } = addUser({ id: socket.id, name, room });
-  
-    if (error) return callback(error);
+    try {
+      const { error, user } = addUser({ id: socket.id, name, room });
 
-    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}` });
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+      if (error) return callback(error);
 
-    socket.join(user.room);
+      socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}` });
+      socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
-    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
-    
-    callback();
+      socket.join(user.room);
+
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+
+      callback();
+    } catch (e) {
+      console.log('error in join socket', e)
+    }
   });
 
   socket.on('sendMessage', (message, callback) => {
-    const user = getUser(socket.id);
+    try {
+      const user = getUser(socket.id);
 
-    io.to(user.room).emit('message', { user: user.name, text: message });
-    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+      io.to(user.room).emit('message', { user: user.name, text: message });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
-    callback();
+      callback();
+    } catch (e) {
+      console.log('error in sendMessage socket', e)
+    }
   });
 
   socket.on('submitWord', ({word, startTurnIndex}, callback) => {
-    const user = getUser(socket.id);
-    updateCard(user.room, word, startTurnIndex, getUsersInRoom(user.room).length);
+    try {
+      const user = getUser(socket.id);
+      updateCard(user.room, word, startTurnIndex, getUsersInRoom(user.room).length);
 
-    // io.to(user.room).emit('message', { user: user.name, text: message });
-    // io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+      io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
 
-    io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
-
-    callback();
+      callback();
+    } catch (e) {
+      console.log('error in submitWord socket', e)
+    }
   });
 
 
   socket.on('setReadyToPlay', (callback) => {
-    const user = getUser(socket.id);
-    setReadyToPlay(socket.id);
+    try {
+      const user = getUser(socket.id);
+      setReadyToPlay(socket.id);
 
-    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
-    //check if all users in room have set ready to play
-    if (checkAllReadyToPlay(user.room)) {
-      io.to(user.room).emit('startGame', { room: user.room, users: getUsersInRoom(user.room) });
+      //check if all users in room have set ready to play
+      if (checkAllReadyToPlay(user.room)) {
+        io.to(user.room).emit('startGame', { room: user.room, users: getUsersInRoom(user.room) });
+      }
+
+      callback();
+    } catch (e) {
+      console.log('error in setReadyToPlay socket', e)
     }
-
-    callback();
   })
 
   socket.on('initiateGame', (callback) => {
-    const user = getUser(socket.id);
-    const games = addGame(user.room, getUsersInRoom(user.room));
-    if (!!games) {
-      callback();
+    try {
+      const user = getUser(socket.id);
+      const games = addGame(user.room, getUsersInRoom(user.room));
+      if (!!games) {
+        callback();
+      }
+    } catch (e) {
+      console.log('error in initiateGame socket', e)
     }
   })
 
   socket.on('restartGame', (callback) => {
-    const user = getUser(socket.id);
-    restartGame(user.room);
-    const games = addGame(user.room, getUsersInRoom(user.room))
-    io.to(user.room).emit('gameRestarted', {room: user.room})
-    if (!!games) {
-      callback();
+    try {
+      const user = getUser(socket.id);
+      restartGame(user.room);
+      const games = addGame(user.room, getUsersInRoom(user.room))
+      io.to(user.room).emit('gameRestarted', {room: user.room})
+      if (!!games) {
+        callback();
+      }
+    } catch (e) {
+      console.log('error in restartGame socket', e)
     }
   })
 
   socket.on('fetchGame', (callback) => {
-    const user = getUser(socket.id)
- 
-    io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
+    try {
+      const user = getUser(socket.id)
 
-    callback();
+      io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
+
+      callback();
+    } catch (e) {
+      console.log('error in fetchGame socket', e)
+    }
   })
 
   socket.on('disconnect', () => {
-    const user = removeUser(socket.id);
+    try {
+      const user = removeUser(socket.id);
 
-    if (user) {
-      io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
+      if (user) {
+        io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
+      }
+    } catch (e) {
+      console.log('error in disconnect socket', e)
     }
-    console.log('User has left!!!');
   });
 })
 
