@@ -9,7 +9,6 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
   const [word, setWord] = useState('');
   const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
-    console.log("game is now new round?", newRound)
     if (!!newRound) {
       setSubmitted(false)
       setWord('')
@@ -56,7 +55,7 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
           <div>
             {previousStep.includes('start by writing') ? '' : `now transform this into a ${nextStep === 'word' ? `word or phrase` : nextStep}:`}
             {previousStep.includes('3.6.3') ? (
-              <Canvas id='previous-drawing' json={previousStep} />
+              <Canvas className='no-draw' id='previous-drawing' json={previousStep} />
             ) : (<p className="previousStep">{previousStep}</p>)}
             
             {nextStep === 'word' && (
