@@ -34,8 +34,14 @@
       var noSleep = new NoSleep();
 
       document.addEventListener('click', function() {
-          console.log('enable wake lock now!')
-          noSleep.enable(); // keep the screen on!
+        noSleep.disable();
+        noSleep = new NoSleep()
+        noSleep.enable();
+      }, false);
+      document.addEventListener('visibilitychange', function() {
+        noSleep.disable();
+        noSleep = new NoSleep()
+        noSleep.enable();
       }, false);
     </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
