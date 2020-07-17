@@ -4,7 +4,7 @@ import onlineIcon from '../../icons/onlineIcon.png';
 
 import './TextContainer.css';
 
-const TextContainer = ({ users }) => {
+const TextContainer = ({ users, game }) => {
   return (
     <div className="textContainer">
       {
@@ -14,12 +14,16 @@ const TextContainer = ({ users }) => {
               <h3>Currently playing:</h3>
               <div className="activeContainer">
                 <h4>
-                  {users.map(({name}) => (
-                    <div key={name} className="activeItem">
-                      {name}
-                      <img alt="Online Icon" src={onlineIcon}/>
+                  {users.map((user) => {
+                    let card;
+                    if (game.length) {
+                      card = game.find((c) => c.currentTurnIndex == user.orderIndex)
+                    }
+                    return <div key={user.name} className="activeItem">
+                      {user.name}
+                      {((card && card.submitted) || (game.length === 0 && user.readyToPlay)) && <img alt="Online Icon" src={onlineIcon}/>}
                     </div>
-                  ))}
+                  })}
                 </h4>
               </div>
             </div>

@@ -37,7 +37,7 @@
   padding: 20px;
   display: inline-block;
   border: none;
-  width: 50%;
+  max-width: 10rem;
 }
 
 @media (max-width: 1000px) {

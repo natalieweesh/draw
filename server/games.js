@@ -13,7 +13,8 @@ const addGame = (room, users) => {
     const card = {
       startTurnIndex: i,
       currentTurnIndex: i,
-      steps: []
+      steps: [],
+      submitted: false,
     }
     newCards.push(card);
   })
@@ -45,8 +46,9 @@ const getGame = (id) => games.find((game) => game.id === id);
 
 const updateCard = (room, word, startTurnIndex, numOfUsers) => {
   let game = games.find((game) => game.id === room);
-  let card = game.cards.find((card) => card.startTurnIndex === startTurnIndex)
-  card.steps.push(word)
+  let card = game.cards.find((card) => card.startTurnIndex === startTurnIndex);
+  card.steps.push(word);
+  card.submitted = true;
   console.log('updated games?')
   console.log(games)
   // if all cards.steps are greater than zero and are the same length and the length is less than the number of users
@@ -61,6 +63,7 @@ const updateCard = (room, word, startTurnIndex, numOfUsers) => {
   if (allCardsStepsGreaterThanZero && allCardsHaveSameNumOfSteps && notFinished) {
     game.cards.map((card) => {
       card.currentTurnIndex = (card.currentTurnIndex + 1) % numOfUsers;
+      card.submitted = false;
     })
     game.newRound = true;
   } else if (allCardsStepsGreaterThanZero && allCardsHaveSameNumOfSteps && !notFinished) {

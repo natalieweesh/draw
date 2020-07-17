@@ -127,11 +127,11 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
     
-      {currentGame.length === 0 && <div className="sideContainer">
-        <TextContainer users={users} user={user} />
-        <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>
-      </div>}
-      {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}
+      <div className="sideContainer">
+        <TextContainer users={users} user={user} game={currentGame} />
+        {currentGame.length === 0 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
+        {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}
+      </div>
       <div className="container max-height">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />
