@@ -27,7 +27,3 @@
   background: orange;
   color: white;
 }
-
-.no-draw .upper-canvas {
-  pointer-events: none;
-}
