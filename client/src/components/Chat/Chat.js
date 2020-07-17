@@ -46,17 +46,16 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on('message', (message) => {
-      setMessages([...messages, message]);
-    })
-
     socket.on('roomData', ({ users }) => {
       setUsers(users);
     })
 
-  }, [messages]);
+    socket.on('message', ({user, message, messages}) => {
+      if (message && messages) {
+        setMessages([...messages, {user, text: message}]);
+      }
+    })
 
-  useEffect(() => {
     socket.on('gameStatus', ({ game }) => {
       if (currentGame.length === 0 && !!game) {
         setCurrentGame(game.cards);
@@ -96,7 +95,7 @@ const Chat = ({ location }) => {
     event.preventDefault();
 
     if (message) {
-      socket.emit('sendMessage', message, () => {
+      socket.emit('sendMessage', {message, messages}, () => {
         setMessage('')
       })
     }

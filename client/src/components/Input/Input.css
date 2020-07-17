@@ -3,6 +3,7 @@
   border-top: 2px solid #D3D3D3;
   background: white;
   justify-content: space-between;
+  min-height: 5.1rem;
 }
 
 .input {

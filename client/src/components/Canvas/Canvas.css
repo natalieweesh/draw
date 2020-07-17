@@ -27,3 +27,7 @@
   background: orange;
   color: white;
 }
+
+.no-draw canvas {
+  background: #ffffff;
+}

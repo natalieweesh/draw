@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
 
       if (error) return callback(error);
 
-      socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}` });
+      socket.emit('message', { user: 'admin', message: `${user.name}, welcome to the room ${user.room}`, messages: [] });
       socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
       socket.join(user.room);
@@ -62,11 +62,11 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('sendMessage', (message, callback) => {
+  socket.on('sendMessage', ({message, messages}, callback) => {
     try {
       const user = getUser(socket.id);
 
-      io.to(user.room).emit('message', { user: user.name, text: message });
+      io.to(user.room).emit('message', { user: user.name, message: message, messages: messages });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
       callback();
@@ -148,7 +148,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     try {
       const user = removeUser(socket.id);
-      console.log('disconnect user', socket.id)
+      console.log('disconnect user', user.name, socket.id)
 
       if (user) {
         io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
