@@ -32,17 +32,15 @@
     <script src="%PUBLIC_URL%/NoSleep.min.js"></script>
     <script>
       var noSleep = new NoSleep();
+      var noSleeping = false;
 
       document.addEventListener('click', function() {
-        console.log('click')
-        if (noSleep) {
-          noSleep = new NoSleep();
+        if (!noSleeping) {
           noSleep.enable();
         }
       }, false);
       document.addEventListener('visibilitychange', function() {
-        console.log('visibility change', document.visibilityState)
-        if (document.visibilityState && noSleep) {
+        if (document.visibilityState && document.visibilityState === 'visible') {
           setTimeout(() => {
             noSleep = new NoSleep();
             noSleep.enable();
