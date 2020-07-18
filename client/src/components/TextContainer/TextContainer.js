@@ -4,14 +4,22 @@ import onlineIcon from '../../icons/onlineIcon.png';
 
 import './TextContainer.css';
 
-const TextContainer = ({ users, game }) => {
+const TextContainer = ({ users, game, finishedGame }) => {
+  let currentRound, totalRounds, gameOver;
+  if (game.length > 0) {
+    totalRounds = game.length;
+    if (game.find((g) => !g.submitted)) {
+      currentRound = game.find((g) => !g.submitted).steps.length + 1
+    }
+  }
   return (
     <div className="textContainer">
       {
         users
           ? (
             <div>
-              <h3>Currently playing:</h3>
+              <p>{currentRound && totalRounds && `Round ${currentRound} of ${totalRounds}`}</p>
+              {game.length > 0 ? (finishedGame ? "Game Over" : "Submitted?") : "Currently playing:"}
               <div className="activeContainer">
                 <h4>
                   {users.map((user) => {

@@ -1,7 +1,7 @@
 .game {
   background: #e0e2e4;
   height: 85%;
-  margin-left: 50px;
+  margin-right: 2rem;
   justify-content: center;
   align-items: center;
   width: 45%;
@@ -40,7 +40,7 @@
   .game {
     width: 90%;
     flex-grow: 1;
-    min-height: 600px;
+    min-height: 450px;
     margin: 0 0 2rem;
     max-height: none;
   }

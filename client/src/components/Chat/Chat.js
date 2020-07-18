@@ -131,16 +131,16 @@ const Chat = ({ location }) => {
     <div className="outerContainer">
     
       <div className="sideContainer">
-        <TextContainer users={users} user={user} game={currentGame} />
+        <TextContainer users={users} user={user} game={currentGame} finishedGame={finishedGame} />
         {currentGame.length === 0 && users.length > 1 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
         {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}
       </div>
+      {currentGame.length > 0 ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} submitWord={submitWord} user={user} users={users} /> : null}
       <div className="container max-height">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      {currentGame.length > 0 ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} submitWord={submitWord} user={user} users={users} /> : null}
     </div>
   )   
 }

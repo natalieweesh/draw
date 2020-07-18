@@ -32,14 +32,14 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
       {finishedGame ? (
         <div className="gameOver">
           {game.map((card, j) => {
-            return <div className='mb-20'>
+            return <div className='mb-20' key={j}>
               <h1>{`${users.find((user) => user.orderIndex === card.startTurnIndex).name}'s chain:`}</h1>
               <ol>
               {card.steps.map((step, i) => {
                 if (step.includes('3.6.3')) {
-                  return <li><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></li>
+                  return <li key={i}><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></li>
                 } else {
-                  return <li><span>{step}</span></li>
+                  return <li key={i}><span>{step}</span></li>
                 }
               })}
             </ol></div>
