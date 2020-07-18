@@ -6,10 +6,13 @@ const addUser = ({ id, name, room }) => {
 
   const existingUser = users.find((user) => user.room === room && user.name === name);
   if (existingUser) {
-    return { error: 'Username is taken' };
+    return { error: 'Sorry, that username is taken!' };
   }
 
   const usersInRoom = getUsersInRoom(room).length;
+  if (usersInRoom > 0 && checkAllReadyToPlay(room)) {
+    return { error: 'Sorry, that game already started! Please join a new game' }
+  }
   const user = { id, name, room,
     readyToPlay: false,
     orderIndex: usersInRoom,

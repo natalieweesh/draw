@@ -148,9 +148,9 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     try {
       const user = removeUser(socket.id);
-      console.log('disconnect user', user.name, socket.id)
 
       if (user) {
+        console.log('disconnect user', user.name, socket.id)
         io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
       }
     } catch (e) {

@@ -34,8 +34,12 @@ const Chat = ({ location }) => {
     setName(name.trim().toLowerCase());
     setRoom(room.trim().toLowerCase());
 
-    socket.emit('join', { name, room }, () => {
-    });
+    socket.emit('join', { name, room }, ((e) => {
+      if (e) {
+        window.location.href='/';
+        alert(e)
+      }
+    }));
 
     return () => {
       socket.emit('disconnect');
@@ -128,7 +132,7 @@ const Chat = ({ location }) => {
     
       <div className="sideContainer">
         <TextContainer users={users} user={user} game={currentGame} />
-        {currentGame.length === 0 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
+        {currentGame.length === 0 && users.length > 1 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
         {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}
       </div>
       <div className="container max-height">
