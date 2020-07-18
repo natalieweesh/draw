@@ -74,6 +74,10 @@ button:focus {
   justify-content: space-between;
 }
 
+.disclaimer {
+  color: white;
+}
+
 .modal {
   position: fixed;
   width: 100%;
