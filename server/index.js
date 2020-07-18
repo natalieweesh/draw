@@ -4,7 +4,7 @@ const http = require('http');
 const cors = require('cors');
 
 const { addUser, removeUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay } = require('./users.js');
-const { addGame, getGame, updateCard, restartGame } = require('./games.js');
+const { addGame, getGame, updateCard, restartGame, removeGame } = require('./games.js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -41,7 +41,7 @@ app.get("/status", (req, res) => {
 })
 
 io.on('connection', (socket) => {
-  console.log('We have a new connection!!!');
+  console.log('We have a new connection!!');
   
   socket.on('join', ({ name, room }, callback) => {
     try {
@@ -151,7 +151,11 @@ io.on('connection', (socket) => {
 
       if (user) {
         console.log('disconnect user', user.name, socket.id)
-        io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
+        if (getUsersInRoom(user.room).length === 0) { //there is a room and you are the only user left
+          removeGame(user.room)
+        } else {
+          io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
+        }
       }
     } catch (e) {
       console.log('error in disconnect socket', e)

@@ -75,4 +75,14 @@ const updateCard = (room, word, startTurnIndex, numOfUsers) => {
   return game
 }
 
-module.exports = { addGame, getGame, updateCard, restartGame };
+const removeGame = (room) => {
+  const index = games.findIndex((game) => game.id === room);
+
+  if (index !== -1) {
+    console.log('games before deleting', games)
+    games.splice(index, 1)[0];
+    console.log('games after deleting', games)
+  }
+}
+
+module.exports = { addGame, getGame, updateCard, restartGame, removeGame };
