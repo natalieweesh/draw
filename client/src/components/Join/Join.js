@@ -8,6 +8,7 @@ import party from '../../examples/party.jpg';
 import rabbit from '../../examples/rabbit.png';
 import saint from '../../examples/saint.png';
 import venus from '../../examples/venus.jpg';
+import Canvas from '../Canvas/Canvas';
 import './Join.css';
 
 const Join = () => {
@@ -37,6 +38,8 @@ const Join = () => {
           }}>Hall of fame</button>
         </div>
         </form>
+        <p className="mt-20 disclaimer">Try drawing something!</p>
+        <Canvas className="playground-canvas" id="drawing-canvas" playground={true} />
       </div>
       {modal && <div className="modal">
         <button className="button closeModal" onClick={(e) => {

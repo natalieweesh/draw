@@ -28,6 +28,10 @@
   color: white;
 }
 
+.buttonsRow .eraserButton {
+  background: #fff129;
+}
+
 .no-draw canvas {
   background: #ffffff;
 }
