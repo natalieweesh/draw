@@ -19,7 +19,6 @@ const Join = () => {
   return (
     <div className="joinOuterContainer">
       <div className="joinInnerContainer">
-        <p className="disclaimer"><strong>Note:</strong> please don't close your browser or let your phone fall asleep or switch between apps on your phone once you start playing the game!</p>
         <h1 className="heading">Telephone Pictionary</h1>
         <form>
         <div><input className="joinInput" placeholder="Name" type="text" onChange={(event) => setName(event.target.value)} /></div>

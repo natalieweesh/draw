@@ -2,9 +2,7 @@ let users = [];
 
 // Map of usernames to timeout IDs. When user disconnects, schedule
 // removal here. When user reconnects within time limit, remove entry.
-let pendingRemovals = {
-
-};
+let pendingRemovals = {};
 
 const addUser = ({ id, name, room }) => {
   name = name.trim().toLowerCase();
@@ -14,11 +12,19 @@ const addUser = ({ id, name, room }) => {
   // users can claim their username
   if (existingUser) {
     let timeoutId = pendingRemovals[existingUser.name];
-    if (timeoutId !== undefined) {
-      clearTimeout(timeoutId);
-      delete pendingRemovals[existingUser.name];
+
+    if (timeoutId === undefined) {
+      // A user is connected to the game! This is an imposter of the other user.
+      // Note that this might run into trouble if a user fails to cleanly disconnect,
+      // because the user cannot take over the existing session, but that is not thought
+      // to be a likely case.
+      return { error: "Sorry, this user already exists! But not sorry."}
     }
+    
+    clearTimeout(timeoutId);
+    delete pendingRemovals[existingUser.name];
     existingUser.id = id;
+
     return { user: existingUser }
   }
 
@@ -37,6 +43,11 @@ const addUser = ({ id, name, room }) => {
 
 const scheduleRemoveUser = (socketId) => {
   let userToRemove = users.find((user) => user.id === socketId);
+
+  if (userToRemove === undefined) {
+    return
+  }
+
   let timeoutId = setTimeout(() => {
     removeUserByUsername(userToRemove.name);
     delete pendingRemovals[userToRemove.name];

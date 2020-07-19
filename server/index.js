@@ -65,6 +65,7 @@ io.on('connection', (socket) => {
   
   socket.on('join', ({ name, room }, callback) => {
     try {
+      console.log(`adding user with socket id: ${socket.id} name: ${name}, room: ${room}`)
       const { error, user } = addUser({ id: socket.id, name, room });
 
       if (error) return callback(error);

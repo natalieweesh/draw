@@ -54,6 +54,7 @@ const Chat = ({ location }) => {
       setUsers(users);
     })
     socket.off('gameStatus').on('gameStatus', ({ game }) => {
+      document.removeEventListener('visibilitychange');
       if (currentGame.length === 0 && !!game) {
         setCurrentGame(game.cards);
         if (newRound !== game.newRound) {
@@ -69,7 +70,27 @@ const Chat = ({ location }) => {
       setNewRound(false)
       setCurrentGame([])
     })
+    
   }, [])
+
+  useEffect(() => {
+    socket.off('disconnect').on('disconnect', () => {
+      // remove event listener
+      document.removeEventListener("visibilitychange")
+      document.addEventListener('visibilitychange', (e) => {
+        if (document.visibilityState && document.visibilityState === 'visible') {
+          socket.connect()
+          socket.emit('join', { name, room }, ((e) => {
+            console.log("reconnect successful:", name, room, e)
+            if (e) {
+              window.location.href='/';
+              alert(e)
+            }
+          })); 
+        }
+      })
+    })
+  })
 
   useEffect(() => {
     socket.off('message').on('message', ({user, message, messages}) => {
