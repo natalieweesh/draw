@@ -1,7 +1,5 @@
 import React from 'react';
 
-import onlineIcon from '../../icons/onlineIcon.png';
-
 import './TextContainer.css';
 
 const TextContainer = ({ users, game, finishedGame }) => {
@@ -29,7 +27,7 @@ const TextContainer = ({ users, game, finishedGame }) => {
                     }
                     return <div key={user.name} className="activeItem">
                       {user.name}
-                      {((card && card.submitted) || (game.length === 0 && user.readyToPlay)) && <img alt="Online Icon" src={onlineIcon}/>}
+                      {((card && card.submitted) || (game.length === 0 && user.readyToPlay)) && <div className="greenDot"></div>}
                     </div>
                   })}
                 </h4>
