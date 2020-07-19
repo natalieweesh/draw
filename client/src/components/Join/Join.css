@@ -27,8 +27,8 @@ input[type=text], input[type=submit], button {
 }
 
 .joinInnerContainer {
-  width: 33%;
-  max-width: 300px;
+  width: 50%;
+  max-width: 375px;
 }
 
 .joinInput {
@@ -119,6 +119,6 @@ button:focus {
 
 @media (max-width: 1000px) {
   .joinInnerContainer {
-    width: 70%;
+    width: 100%;
   }
 }

@@ -8,11 +8,24 @@
   max-height: 90vh;
 }
 
+.game > div {
+  padding: 2rem 0;
+  min-width: 375px;
+}
+
 .gameOver {
-  padding: 1rem;
   overflow: auto;
   flex: auto;
   width: 100%;
+}
+
+.gameOver .bigger {
+  font-size: 1.5rem;
+  display: inline-block;
+}
+
+.gameOver .step {
+  margin: 1rem 0;
 }
 
 .sendButtonSmall {
@@ -20,17 +33,23 @@
 }
 
 .previousStep {
-  width: 300px;
-}
-
-.gameOver ol li {
-  margin: 1rem 0;
-}
-.gameOver ol li span {
   font-size: 1.5rem;
+}
+.gameOver > div {
+  padding: 1rem;
+}
+.gameOver h1, .gameOver span {
+  padding-left: 1rem;
 }
 .mb-20 {
   margin-bottom: 4rem;
+}
+.pb-2 {
+  margin: 0 1.5rem 2rem;
+  display: block;
+}
+.paddedGame {
+  padding: 0 1.5rem;
 }
 
 @media (max-width: 1000px) {
@@ -38,19 +57,16 @@
     width: auto;
   }
   .game {
-    width: 90%;
+    width: 100%;
     flex-grow: 1;
     min-height: 450px;
     margin: 0 0 2rem;
     max-height: none;
   }
-  .game > div {
-    min-width: 90%;
-  }
   .sendButtonSmall {
     width: 20%;
   }
-  .gameOver ol {
-    padding-left: 1rem;
+  .gameOver > div {
+    padding: 0;
   }
 }

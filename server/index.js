@@ -1,4 +1,5 @@
 const express = require('express');
+const Sentry = require('@sentry/node');
 const socketio = require('socket.io');
 const http = require('http');
 const cors = require('cors');
@@ -11,6 +12,13 @@ const PORT = process.env.PORT || 5000;
 const router = require('./router');
 
 const app = express();
+
+Sentry.init({ dsn: 'https://e056aabec1b343c58f3b1ce6ee82ca89@o422420.ingest.sentry.io/5348508' });
+
+// The request handler must be the first middleware on the app
+app.use(Sentry.Handlers.requestHandler());
+
+
 const server = http.createServer(app);
 const io = socketio(server);
 
@@ -39,6 +47,18 @@ app.get("/status", (req, res) => {
     success: true
   })
 })
+app.get('/debug-sentry', function mainHandler(req, res) {
+  throw new Error('My first Sentry error!');
+});
+
+app.use(Sentry.Handlers.errorHandler({
+  shouldHandleError(error) {
+    if (error.status >= 400 && error.status < 600) {
+      return true
+    }
+    return false
+  }
+}));
 
 io.on('connection', (socket) => {
   console.log('We have a new connection!!');

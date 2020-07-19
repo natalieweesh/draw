@@ -34,29 +34,29 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
           {game.map((card, j) => {
             return <div className='mb-20' key={j}>
               <h1>{`${users.find((user) => user.orderIndex === card.startTurnIndex).name}'s chain:`}</h1>
-              <ol>
+              <div>
               {card.steps.map((step, i) => {
                 if (step.includes('3.6.3')) {
-                  return <li key={i}><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></li>
+                  return <div className="step" key={i}><span>{i+1}.</span><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></div>
                 } else {
-                  return <li key={i}><span>{step}</span></li>
+                  return <div className="step" key={i}><div><span>{i+1}.</span><span className="bigger">{step}</span></div></div>
                 }
               })}
-            </ol></div>
+            </div></div>
           })}
         </div>
       ) : (
       <div>
         {submitted ? (
           <div>
-            <p>waiting for other players' submissions</p>
+            <p className="paddedGame">waiting for other players' submissions</p>
           </div>
         ) : (
           <div>
-            {previousStep.includes('start by writing') ? '' : `now transform this into a ${nextStep === 'word' ? `word or phrase` : nextStep}:`}
+            <span className="pb-2">{previousStep.includes('start by writing') ? '' : `now transform this into a ${nextStep === 'word' ? `word or phrase` : nextStep}:`}</span>
             {previousStep.includes('3.6.3') ? (
               <Canvas className='no-draw' id='previous-drawing' json={previousStep} />
-            ) : (<p className="previousStep">{previousStep}</p>)}
+            ) : (<p className="previousStep paddedGame">{previousStep}</p>)}
             
             {nextStep === 'word' && (
               <form className="form">
