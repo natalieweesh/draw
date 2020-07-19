@@ -165,16 +165,18 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', ({messages}, callback) => {
     try {
       const user = removeUser(socket.id);
 
       if (user) {
         console.log('disconnect user', user.name, socket.id)
         if (getUsersInRoom(user.room).length === 0) { //there is a room and you are the only user left
+          console.log('remove the last user from the room')
           removeGame(user.room)
         } else {
-          io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
+          console.log('there are still ppl in the room', user.name, user.room)
+          io.to(user.room).emit('message', {user: 'admin', message: `${user.name} has left`, messages: messages})
         }
       }
     } catch (e) {

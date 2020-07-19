@@ -15,7 +15,7 @@ let socket;
 const Chat = ({ location }) => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [prevmessages, setPrevMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [users, setUsers] = useState([]);
   const [currentGame, setCurrentGame] = useState([]);
@@ -50,17 +50,10 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on('roomData', ({ users }) => {
+    socket.off('roomData').on('roomData', ({ users }) => {
       setUsers(users);
     })
-
-    socket.on('message', ({user, message, messages}) => {
-      if (message && messages) {
-        setMessages([...messages, {user, text: message}]);
-      }
-    })
-
-    socket.on('gameStatus', ({ game }) => {
+    socket.off('gameStatus').on('gameStatus', ({ game }) => {
       if (currentGame.length === 0 && !!game) {
         setCurrentGame(game.cards);
         if (newRound !== game.newRound) {
@@ -71,7 +64,7 @@ const Chat = ({ location }) => {
         }
       }
     })
-    socket.on('gameRestarted', () => {
+    socket.off('gameRestarted').on('gameRestarted', () => {
       setFinishedGame(false)
       setNewRound(false)
       setCurrentGame([])
@@ -79,7 +72,17 @@ const Chat = ({ location }) => {
   }, [])
 
   useEffect(() => {
-    socket.on('startGame', ({ users }) => {
+    socket.off('message').on('message', ({user, message, messages}) => {
+      if (message && messages) {
+        setPrevMessages([...messages, {user, text: message}]);
+      } else if (message && prevmessages) {
+        setPrevMessages([...prevmessages, {user, text: message}]);
+      }
+    })
+  }, [prevmessages])
+
+  useEffect(() => {
+    socket.off('startGame').on('startGame', ({ users }) => {
       socket.emit('initiateGame', () => {
         socket.emit('fetchGame', () => {
         })
@@ -99,7 +102,7 @@ const Chat = ({ location }) => {
     event.preventDefault();
 
     if (message) {
-      socket.emit('sendMessage', {message, messages}, () => {
+      socket.emit('sendMessage', {message, messages: prevmessages}, () => {
         setMessage('')
       })
     }
@@ -138,7 +141,7 @@ const Chat = ({ location }) => {
       {currentGame.length > 0 ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} submitWord={submitWord} user={user} users={users} /> : null}
       <div className="container max-height">
         <InfoBar room={room} />
-        <Messages messages={messages} name={name} />
+        <Messages messages={prevmessages} name={name} />
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>
