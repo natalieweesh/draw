@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 const http = require('http');
 const cors = require('cors');
 
-const { addUser, removeUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay } = require('./users.js');
+const { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser } = require('./users.js');
 const { addGame, getGame, updateCard, restartGame, removeGame } = require('./games.js');
 
 const PORT = process.env.PORT || 5000;
@@ -70,11 +70,12 @@ io.on('connection', (socket) => {
       if (error) return callback(error);
 
       socket.emit('message', { user: 'admin', message: `${user.name}, welcome to the room ${user.room}`, messages: [] });
-      socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+      socket.broadcast.to(user.room).emit('message', { user: 'admin', message: `${user.name} has joined!` });
 
       socket.join(user.room);
 
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+      io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
 
       callback();
     } catch (e) {
@@ -167,7 +168,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', ({messages}, callback) => {
     try {
-      const user = removeUser(socket.id);
+      const user = scheduleRemoveUser(socket.id);
 
       if (user) {
         console.log('disconnect user', user.name, socket.id)

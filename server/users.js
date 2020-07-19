@@ -1,12 +1,25 @@
 let users = [];
 
+// Map of usernames to timeout IDs. When user disconnects, schedule
+// removal here. When user reconnects within time limit, remove entry.
+let pendingRemovals = {
+
+};
+
 const addUser = ({ id, name, room }) => {
   name = name.trim().toLowerCase();
   room = room.trim().toLowerCase();
 
   const existingUser = users.find((user) => user.room === room && user.name === name);
+  // users can claim their username
   if (existingUser) {
-    return { error: 'Sorry, that username is taken!' };
+    let timeoutId = pendingRemovals[existingUser.name];
+    if (timeoutId !== undefined) {
+      clearTimeout(timeoutId);
+      delete pendingRemovals[existingUser.name];
+    }
+    existingUser.id = id;
+    return { user: existingUser }
   }
 
   const usersInRoom = getUsersInRoom(room).length;
@@ -22,9 +35,19 @@ const addUser = ({ id, name, room }) => {
   return { user };
 }
 
+const scheduleRemoveUser = (socketId) => {
+  let userToRemove = users.find((user) => user.id === socketId);
+  let timeoutId = setTimeout(() => {
+    removeUserByUsername(userToRemove.name);
+    delete pendingRemovals[userToRemove.name];
+  }, 300000) // after 5 minutes
+  pendingRemovals[userToRemove.name] = timeoutId;
 
-const removeUser = (id) => {
-  const index = users.findIndex((user) => user.id === id);
+  return userToRemove;
+}
+
+const removeUserByUsername = (username) => {
+  const index = users.findIndex((user) => user.name === username);
 
   if (index !== -1) {
     return users.splice(index, 1)[0];
@@ -52,4 +75,4 @@ const checkAllReadyToPlay = (room) => {
   return usersInRoom === usersReadyToPlay;
 }
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay };
+module.exports = { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser, removeUserByUsername };

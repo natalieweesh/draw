@@ -73,10 +73,10 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.off('message').on('message', ({user, message, messages}) => {
-      if (message && messages) {
-        setPrevMessages([...messages, {user, text: message}]);
-      } else if (message && prevmessages) {
+      if (message && prevmessages) {
         setPrevMessages([...prevmessages, {user, text: message}]);
+      } else if (message && messages) {
+        setPrevMessages([...messages, {user, text: message}]);
       }
     })
   }, [prevmessages])
