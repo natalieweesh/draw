@@ -121,4 +121,10 @@ button:focus {
   .joinInnerContainer {
     width: 100%;
   }
+  .joinInnerContainer > * {
+    padding: 0 2rem;
+  }
+  .joinInnerContainer > .playground-canvas {
+    padding: 0;
+  }
 }
