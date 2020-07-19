@@ -61,7 +61,7 @@ app.use(Sentry.Handlers.errorHandler({
 }));
 
 io.on('connection', (socket) => {
-  console.log('We have a new connection!!!');
+  console.log('We have a new connection!!');
   
   socket.on('join', ({ name, room }, callback) => {
     try {

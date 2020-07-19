@@ -13,18 +13,13 @@ const addUser = ({ id, name, room }) => {
   if (existingUser) {
     let timeoutId = pendingRemovals[existingUser.name];
 
-    if (timeoutId === undefined) {
-      // A user is connected to the game! This is an imposter of the other user.
-      // Note that this might run into trouble if a user fails to cleanly disconnect,
-      // because the user cannot take over the existing session, but that is not thought
-      // to be a likely case.
-      return { error: "Sorry, this user already exists! But not sorry."}
+    if (timeoutId !== undefined) {
+      clearTimeout(timeoutId);
+      delete pendingRemovals[existingUser.name];
     }
-    
-    clearTimeout(timeoutId);
-    delete pendingRemovals[existingUser.name];
-    existingUser.id = id;
 
+    // Note that this allows account takeovers. Have fun!
+    existingUser.id = id;
     return { user: existingUser }
   }
 
