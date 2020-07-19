@@ -61,7 +61,7 @@ app.use(Sentry.Handlers.errorHandler({
 }));
 
 io.on('connection', (socket) => {
-  console.log('We have a new connection!!');
+  console.log('We have a new connection!!!');
   
   socket.on('join', ({ name, room }, callback) => {
     try {
@@ -100,7 +100,9 @@ io.on('connection', (socket) => {
   socket.on('submitWord', ({word, startTurnIndex}, callback) => {
     try {
       const user = getUser(socket.id);
-      updateCard(user.room, word, startTurnIndex, getUsersInRoom(user.room).length);
+      user.answerSubmitted = true;
+
+      updateCard(user.room, word, startTurnIndex, getUsersInRoom(user.room).length, getUsersInRoom(user.room));
 
       io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
 
@@ -144,9 +146,9 @@ io.on('connection', (socket) => {
   socket.on('restartGame', (callback) => {
     try {
       const user = getUser(socket.id);
-      restartGame(user.room);
+      restartGame(user.room, getUsersInRoom(user.room));
       const games = addGame(user.room, getUsersInRoom(user.room))
-      io.to(user.room).emit('gameRestarted', {room: user.room})
+      io.to(user.room).emit('gameRestarted', {room: user.room, users: getUsersInRoom(user.room)})
       if (!!games) {
         callback();
       }

@@ -30,7 +30,7 @@ const addGame = (room, users) => {
   return games;
 }
 
-const restartGame = (room) => {
+const restartGame = (room, users) => {
   const gameToRemove = games.findIndex((game) => game.id == room);
   console.log('game to remove', gameToRemove)
   if (gameToRemove === -1) {
@@ -39,12 +39,15 @@ const restartGame = (room) => {
   console.log('games length', games.length)
   games.splice(gameToRemove, 1);
   console.log('games length after', games.length)
+  users.map((u) => {
+    u.answerSubmitted = false;
+  })
   return games;
 }
 
 const getGame = (id) => games.find((game) => game.id === id);
 
-const updateCard = (room, word, startTurnIndex, numOfUsers) => {
+const updateCard = (room, word, startTurnIndex, numOfUsers, users) => {
   let game = games.find((game) => game.id === room);
   let card = game.cards.find((card) => card.startTurnIndex === startTurnIndex);
   card.steps.push(word);
@@ -66,9 +69,15 @@ const updateCard = (room, word, startTurnIndex, numOfUsers) => {
       card.submitted = false;
     })
     game.newRound = true;
+    users.map((u) => {
+      u.answerSubmitted = false;
+    })
   } else if (allCardsStepsGreaterThanZero && allCardsHaveSameNumOfSteps && !notFinished) {
     console.log('game is finished')
     game.finishedGame = true;
+    users.map((u) => {
+      u.answerSubmitted = false;
+    })
   } else {
     game.newRound = false;
   }

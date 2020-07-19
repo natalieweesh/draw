@@ -59,3 +59,8 @@ netlify deploy --prod
 from the server/ directory:
 heroku login
 git push heroku master
+
+
+# Outstanding Bugs
+1. When user has submitted drawing and is waiting for others to submit, and user refreshes page, text field with old picture is shown instead of taking the user back to the "waiting for others to submit" page.
+2. Sorry not sorry message showing at unexpected points after turning phone on and off

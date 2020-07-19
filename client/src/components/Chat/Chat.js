@@ -65,9 +65,10 @@ const Chat = ({ location }) => {
         }
       }
     })
-    socket.off('gameRestarted').on('gameRestarted', () => {
+    socket.off('gameRestarted').on('gameRestarted', ({ users }) => {
       setFinishedGame(false)
       setNewRound(false)
+      setUsers(users);
       setCurrentGame([])
     })
     

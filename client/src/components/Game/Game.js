@@ -7,7 +7,8 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
   const previousStep = card.steps.length > 0 ? card.steps[card.steps.length - 1] : 'start by writing a random word or phrase!';
   const nextStep = card.steps.length % 2 === 0 ? 'word' : 'drawing';
   const [word, setWord] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(user.answerSubmitted);
+
   useEffect(() => {
     if (!!newRound) {
       setSubmitted(false)
