@@ -54,15 +54,12 @@ const Chat = ({ location }) => {
       setUsers(users);
     })
     socket.off('gameStatus').on('gameStatus', ({ game }) => {
-      document.removeEventListener('visibilitychange');
       if (currentGame.length === 0 && !!game) {
         setCurrentGame(game.cards);
         if (newRound !== game.newRound) {
           setNewRound(game.newRound)
         }
-        if (finishedGame !== game.finishedGame) {
-          setFinishedGame(game.finishedGame)
-        }
+        setFinishedGame(game.finishedGame)
       }
     })
     socket.off('gameRestarted').on('gameRestarted', ({ users }) => {
@@ -174,7 +171,6 @@ const Chat = ({ location }) => {
   const user = users.find((user) => user.name === name);
   return (
     <div className="outerContainer">
-    
       <div className="sideContainer">
         <TextContainer users={users} user={user} game={currentGame} finishedGame={finishedGame} />
         {currentGame.length === 0 && users.length > 1 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
