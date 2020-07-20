@@ -1,5 +1,8 @@
 let games = [];
 
+// map of room names to interval IDs
+let pendingRemovals = {};
+
 const addGame = (room, users) => {
   
   console.log('room', room)
@@ -94,4 +97,31 @@ const removeGame = (room) => {
   }
 }
 
-module.exports = { addGame, getGame, updateCard, restartGame, removeGame };
+const scheduleRemoveGame = (room, getUsersInRoom) => {
+  let intervalId = setInterval(() => {
+    console.log('deleting this room', room);
+    const index = games.findIndex((game) => game.id === room);
+
+    if (index !== -1) {
+      const users = getUsersInRoom(room)
+      if (users.length > 0) {
+        console.log('there are still users in the room so do not delete it')
+        return;
+      } else {
+        //delete the room for real
+        console.log('games before deleting', games)
+        games.splice(index, 1)[0];
+        let intervalToStop = pendingRemovals[room];
+        if (intervalToStop) {
+          clearInterval(intervalToStop);
+          delete pendingRemovals[room];
+        }
+        console.log('games after deleting', games)
+      }
+    }
+
+  }, 1800000) // check every 30 minutes
+  pendingRemovals[room] = intervalId;
+}
+
+module.exports = { addGame, getGame, updateCard, restartGame, removeGame, scheduleRemoveGame };
