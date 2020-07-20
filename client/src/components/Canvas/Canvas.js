@@ -10,7 +10,7 @@ class Canvas extends React.Component {
   }
   componentDidMount() {
     if (this.props.json) {
-      this.state.canvas = new fabric.StaticCanvas(this.props.id, {width: 375, height: 375, backgroundColor: 'white', allowTouchScrolling: true})
+      this.state.canvas = new fabric.StaticCanvas(this.props.id, {width: 375, height: 375, backgroundColor: 'white', allowTouchScrolling: true, imageSmoothingEnabled: true, interactive: false})
       this.state.canvas.loadFromJSON(this.props.json)
     } else {
       this.state.canvas = new fabric.Canvas(this.props.id, {isDrawingMode: true, width: 375, height: 375, backgroundColor: 'white', interactive: false, stateful: false});

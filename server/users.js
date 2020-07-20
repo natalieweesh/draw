@@ -12,8 +12,9 @@ const addUser = ({ id, name, room }) => {
   // users can claim their username
   if (existingUser) {
     let timeoutId = pendingRemovals[existingUser.name];
-
+    console.log('there is an existing user with that name')
     if (timeoutId !== undefined) {
+      console.log('delete the pending remova for that user')
       clearTimeout(timeoutId);
       delete pendingRemovals[existingUser.name];
     }
@@ -44,9 +45,10 @@ const scheduleRemoveUser = (socketId) => {
   }
 
   let timeoutId = setTimeout(() => {
+    console.log('removing this user for real', userToRemove.name, userToRemove.id)
     removeUserByUsername(userToRemove.name);
     delete pendingRemovals[userToRemove.name];
-  }, 300000) // after 5 minutes
+  }, 600000) // after 10 minutes
   pendingRemovals[userToRemove.name] = timeoutId;
 
   return userToRemove;
