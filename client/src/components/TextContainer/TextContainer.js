@@ -19,18 +19,16 @@ const TextContainer = ({ users, game, finishedGame }) => {
               <p>{currentRound && totalRounds && `Round ${currentRound} of ${totalRounds}`}</p>
               {game.length > 0 ? (finishedGame ? "Game Over" : "Submitted?") : "Currently playing:"}
               <div className="activeContainer">
-                <h4>
-                  {users.map((user) => {
-                    let card;
-                    if (game.length) {
-                      card = game.find((c) => c.currentTurnIndex == user.orderIndex)
-                    }
-                    return <div key={user.name} className="activeItem">
-                      {user.name}
-                      {((card && card.submitted) || (game.length === 0 && user.readyToPlay)) && <div className="greenDot"></div>}
-                    </div>
-                  })}
-                </h4>
+                {users.map((user) => {
+                  let card;
+                  if (game.length) {
+                    card = game.find((c) => c.currentTurnIndex == user.orderIndex)
+                  }
+                  return <div key={user.name} className="activeItem">
+                    <div>{user.name}</div>
+                    {((card && card.submitted) || (game.length === 0 && user.readyToPlay)) && <div className="greenDot"></div>}
+                  </div>
+                })}
               </div>
             </div>
           )

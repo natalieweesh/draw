@@ -12,12 +12,15 @@
 
 .activeContainer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .activeItem {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-top: 0.3rem;
 }
 
 .activeContainer img {
@@ -36,6 +39,7 @@
   width: 6px;
   height: 6px;
   border-radius: 6px;
+  padding: 3px;
+  margin-left: 0.5rem;
   background: #29ff8b;
-  margin: 0 0.5rem;
 }

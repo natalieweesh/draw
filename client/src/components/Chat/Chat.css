@@ -38,6 +38,7 @@
   display: inline-block;
   border: none;
   max-width: 10rem;
+  margin-top: 1rem;
 }
 
 @media (max-width: 1000px) {
