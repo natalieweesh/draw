@@ -35,4 +35,6 @@
 
 .no-draw canvas {
   background: #ffffff;
+  width: 375px;
+  height: 375px;
 }

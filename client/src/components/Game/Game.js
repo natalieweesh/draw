@@ -37,7 +37,7 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
               <h1>{`${users.find((user) => user.orderIndex === card.startTurnIndex).name}'s chain:`}</h1>
               <div>
               {card.steps.map((step, i) => {
-                if (step.includes('3.6.3')) {
+                if (step.includes('data:image')) {
                   return <div className="step" key={i}><span>{i+1}.</span><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></div>
                 } else {
                   return <div className="step" key={i}><div><span>{i+1}.</span><span className="bigger">{step}</span></div></div>
@@ -55,7 +55,7 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
         ) : (
           <div>
             <span className="pb-2">{previousStep.includes('start by writing') ? '' : `now transform this into a ${nextStep === 'word' ? `word or phrase` : nextStep}:`}</span>
-            {previousStep.includes('3.6.3') ? (
+            {previousStep.includes('data:image') ? (
               <Canvas className='no-draw' id='previous-drawing' json={previousStep} />
             ) : (<p className="previousStep paddedGame">{previousStep}</p>)}
             

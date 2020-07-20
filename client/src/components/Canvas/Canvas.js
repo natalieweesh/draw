@@ -10,8 +10,13 @@ class Canvas extends React.Component {
   }
   componentDidMount() {
     if (this.props.json) {
-      this.state.canvas = new fabric.StaticCanvas(this.props.id, {width: 375, height: 375, backgroundColor: 'white', allowTouchScrolling: true, imageSmoothingEnabled: true, interactive: false})
-      this.state.canvas.loadFromJSON(this.props.json)
+      var img = new Image;
+      var staticCanvas = document.getElementById(this.props.id);
+      var ctx = staticCanvas.getContext('2d');
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0);
+      }
+      img.src = this.props.json;
     } else {
       this.state.canvas = new fabric.Canvas(this.props.id, {isDrawingMode: true, width: 375, height: 375, backgroundColor: 'white', interactive: false, stateful: false});
       this.state.canvas.freeDrawingBrush = new fabric.PencilBrush(this.state.canvas);
@@ -24,7 +29,7 @@ class Canvas extends React.Component {
     const { submitImage, json, id, className, playground } = this.props;
    
     return <div className={`textContainer ${className}`}>
-      <canvas id={id} />
+      <canvas id={id} width="375" height="375" />
       {json ? (
          null
       ) : (
@@ -51,7 +56,7 @@ class Canvas extends React.Component {
             this.setState({eraserMode: !this.state.eraserMode})
           }}>{this.state.eraserMode ? <span>stop<br/>erasing</span> : <span>use<br/>eraser</span>}</button>
           {!playground && <button onClick={(e) => {
-            submitImage(e, JSON.stringify(this.state.canvas.toJSON()))
+            submitImage(e, this.state.canvas.toDataURL())
           }}>submit drawing</button>}
         </div>
       )}
