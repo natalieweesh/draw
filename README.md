@@ -1,6 +1,6 @@
 # telephone pictionary!
 
-https://wonderful-easley-d68795.netlify.app/
+https://draw.nataliewee.com
 
 join a room with your friends, and start playing!
 
