@@ -18,7 +18,8 @@
 }
 
 .max-height {
-  max-height: 600px;
+  max-height: 500px;
+  height: 500px;
 }
 
 .sideContainer {
@@ -53,7 +54,8 @@
     margin: 2rem 0;
   }
   .max-height {
-    max-height: 500px;
+    height: 400px;
+    max-height: 400px;
   }
   .sideContainer {
     width: 25%;
