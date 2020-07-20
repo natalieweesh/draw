@@ -188,6 +188,14 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('frontEndReconnect', ({name, room}, callback) => {
+    try {
+      console.log('try to reconnect from the front end now!', name, room)
+    } catch (e) {
+      console.log('error in frontEndReconnect socket', e)
+    }
+  })
+
   socket.on('reconnect', () => {
     try {
       console.log('reconnect now!', socket.id)

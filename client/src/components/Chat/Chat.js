@@ -76,20 +76,40 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.off('disconnect').on('disconnect', () => {
-      // remove event listener
-      document.removeEventListener("visibilitychange")
-      document.addEventListener('visibilitychange', (e) => {
+      const reconnectFrontEnd = () => {
+        const { name, room } = queryString.parse(location.search);
+        socket.connect()
+        socket.emit('frontEndReconnect', {name, room}, () => {
+        })
+        socket.emit('join', { name, room }, ((e) => {
+          if (e) {
+            window.location.href='/';
+            alert(e)
+          }
+        }));
+        document.removeEventListener('click', reconnectFrontEnd)
+        document.removeEventListener('visibilitychange', reconnectFrontEndVisible);
+      }
+      document.addEventListener('click', reconnectFrontEnd)
+
+      const reconnectFrontEndVisible = () => {
+        const { name, room } = queryString.parse(location.search);
         if (document.visibilityState && document.visibilityState === 'visible') {
           socket.connect()
+          socket.emit('frontEndReconnect', {name, room}, () => {
+          })
           socket.emit('join', { name, room }, ((e) => {
-            console.log("reconnect successful:", name, room, e)
             if (e) {
               window.location.href='/';
               alert(e)
             }
+            document.removeEventListener('visibilitychange');
           })); 
+          document.removeEventListener('visibilitychange', reconnectFrontEndVisible);
+          document.removeEventListener('click', reconnectFrontEnd)
         }
-      })
+      }
+      document.addEventListener('visibilitychange', reconnectFrontEndVisible)
     })
   })
 
@@ -160,7 +180,7 @@ const Chat = ({ location }) => {
         {currentGame.length === 0 && users.length > 1 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
         {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}
       </div>
-      {currentGame.length > 0 ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} submitWord={submitWord} user={user} users={users} /> : null}
+      {currentGame.length > 0 && user ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} submitWord={submitWord} user={user} users={users} /> : null}
       <div className="container max-height">
         <InfoBar room={room} />
         <Messages messages={prevmessages} name={name} />
