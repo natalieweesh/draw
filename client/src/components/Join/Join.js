@@ -8,6 +8,7 @@ import party from '../../examples/party.jpg';
 import rabbit from '../../examples/rabbit.png';
 import saint from '../../examples/saint.png';
 import venus from '../../examples/venus.jpg';
+import butt from '../../examples/butt.JPG';
 import Canvas from '../Canvas/Canvas';
 import './Join.css';
 
@@ -48,13 +49,15 @@ const Join = () => {
         {modal === 'rules' ? (
           <div className="instructions">
             <h3>How to play!</h3>
+            <p>first join a room with your friends</p>
+            <p>when everyone is in, press play!</p>
             <p>every player starts by writing a random word or phrase</p>
             <p>then you pass your word onto the next person</p>
             <p>now every person has to draw the word they were given</p>
             <p>then pass your drawing onto the next person</p>
             <p>you keep drawing or writing and passing to the next person</p>
             <p>until your original word comes back to you</p>
-            <p>and we get to see how your word was translated from person to person</p>
+            <p>and we get to laugh at how your word was translated from person to person</p>
           </div>
         ) : (
           <div className="images">
@@ -66,6 +69,7 @@ const Join = () => {
             <img src={rabbit} alt="rabbit" />
             <img src={saint} alt="saint" />
             <img src={venus} alt="venus" />
+            <img src={butt} alt="butt" />
           </div>
         )}
       </div>}
