@@ -31,6 +31,9 @@ when your words come around back to you, you get to see how your words were tran
   <td>
     <img src="https://user-images.githubusercontent.com/3805607/87841982-1f4c9f00-c877-11ea-8cf5-6ad1eff19c8f.png" />
   </td>
+    <td>
+      <img src="https://user-images.githubusercontent.com/3805607/88309271-0fe8ae00-ccdc-11ea-8bf4-29d60c882e08.JPG" />
+    </td>
   </tr>
 </table>
 
@@ -48,10 +51,14 @@ examples of the funsies you can have:
 
 ### to deploy the app:
 
-from the client/ directory:
-npm run build
-netlify login
-netlify deploy
+from the client/ directory: 
+
+`npm run build`
+
+`netlify login`
+
+`netlify deploy`
+
 (when it asks for which folder, put in `./build`)
 netlify deploy --prod
 (also put `./build`)
