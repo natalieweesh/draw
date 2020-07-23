@@ -15,24 +15,24 @@ when your words come around back to you, you get to see how your words were tran
 <table>
   <tr>
   <td>
-    <img src="https://user-images.githubusercontent.com/3805607/87841970-122fb000-c877-11ea-8331-b14e740b1bde.png" />
+    <img src="https://user-images.githubusercontent.com/3805607/87841970-122fb000-c877-11ea-8331-b14e740b1bde.png" width="300" />
   </td>
   <td>
-    <img src="https://user-images.githubusercontent.com/3805607/87841979-1bb91800-c877-11ea-90b5-e0ee16912921.png" />
+    <img src="https://user-images.githubusercontent.com/3805607/87841979-1bb91800-c877-11ea-90b5-e0ee16912921.png" width="300" />
   </td>
   <td>
-    <img src="https://user-images.githubusercontent.com/3805607/87841990-31c6d880-c877-11ea-8de5-0f737f64c08b.png" />
+    <img src="https://user-images.githubusercontent.com/3805607/87841990-31c6d880-c877-11ea-8de5-0f737f64c08b.png" width="300" />
   </td>
   </tr>
   <tr>
   <td>
-    <img src="https://user-images.githubusercontent.com/3805607/87841985-22e02600-c877-11ea-9009-37748c30b345.png" />
+    <img src="https://user-images.githubusercontent.com/3805607/87841985-22e02600-c877-11ea-9009-37748c30b345.png" width="300" />
   </td>
   <td>
-    <img src="https://user-images.githubusercontent.com/3805607/87841982-1f4c9f00-c877-11ea-8cf5-6ad1eff19c8f.png" />
+    <img src="https://user-images.githubusercontent.com/3805607/87841982-1f4c9f00-c877-11ea-8cf5-6ad1eff19c8f.png" width="300" />
   </td>
     <td>
-      <img src="https://user-images.githubusercontent.com/3805607/88309271-0fe8ae00-ccdc-11ea-8bf4-29d60c882e08.JPG" />
+      <img src="https://user-images.githubusercontent.com/3805607/88309271-0fe8ae00-ccdc-11ea-8bf4-29d60c882e08.JPG" width="300" />
     </td>
   </tr>
 </table>
