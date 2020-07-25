@@ -66,6 +66,25 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
+const shuffleAndGetUsersInRoom = (room) => {
+  const roomUsers = users.filter((u) => u.room === room);
+  console.log('users before', roomUsers)
+  const numUsers = roomUsers.length;
+  let randomNums = [];
+  for (let i=0; i<numUsers; i++) {
+    randomNums.push(i);
+  }
+  for (let j=0; j < numUsers; j++) {
+    const r = Math.floor(Math.random() * randomNums.length);
+    const randIdx = randomNums[r];
+    const userId = roomUsers[j]['id'];
+    users.find((u) => u.id === userId).orderIndex = randIdx;
+    randomNums.splice(r, 1);
+  }
+  console.log('users after', users.filter((u) => u.room === room));
+  return users.filter((u) => u.room === room);
+}
+
 const setReadyToPlay = (id) => {
   console.log('id', id)
   let myUser = users.find((user) => {
@@ -83,4 +102,4 @@ const checkAllReadyToPlay = (room) => {
   return usersInRoom === usersReadyToPlay;
 }
 
-module.exports = { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser, removeUserByUsername };
+module.exports = { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser, removeUserByUsername, shuffleAndGetUsersInRoom };

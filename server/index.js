@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 const http = require('http');
 const cors = require('cors');
 
-const { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser } = require('./users.js');
+const { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser, shuffleAndGetUsersInRoom } = require('./users.js');
 const { addGame, getGame, updateCard, restartGame, removeGame, scheduleRemoveGame } = require('./games.js');
 
 const PORT = process.env.PORT || 5000;
@@ -61,7 +61,7 @@ app.use(Sentry.Handlers.errorHandler({
 }));
 
 io.on('connection', (socket) => {
-  console.log('We have a new connection!!!');
+  console.log('We have a new connection!!');
   
   socket.on('join', ({ name, room }, callback) => {
     try {
@@ -134,7 +134,7 @@ io.on('connection', (socket) => {
   socket.on('initiateGame', (callback) => {
     try {
       const user = getUser(socket.id);
-      const games = addGame(user.room, getUsersInRoom(user.room));
+      const games = addGame(user.room, shuffleAndGetUsersInRoom(user.room));
       scheduleRemoveGame(user.room, getUsersInRoom)
       if (!!games) {
         callback();
@@ -148,7 +148,7 @@ io.on('connection', (socket) => {
     try {
       const user = getUser(socket.id);
       restartGame(user.room, getUsersInRoom(user.room));
-      const games = addGame(user.room, getUsersInRoom(user.room))
+      const games = addGame(user.room, shuffleAndGetUsersInRoom(user.room))
       io.to(user.room).emit('gameRestarted', {room: user.room, users: getUsersInRoom(user.room)})
       if (!!games) {
         callback();

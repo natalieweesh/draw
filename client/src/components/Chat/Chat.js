@@ -51,7 +51,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.off('roomData').on('roomData', ({ users }) => {
-      setUsers(users);
+      setUsers(users.sort((a, b) => a.orderIndex - b.orderIndex));
     })
     socket.off('gameStatus').on('gameStatus', ({ game }) => {
       if (currentGame.length === 0 && !!game) {
@@ -65,7 +65,7 @@ const Chat = ({ location }) => {
     socket.off('gameRestarted').on('gameRestarted', ({ users }) => {
       setFinishedGame(false)
       setNewRound(false)
-      setUsers(users);
+      setUsers(users.sort((a, b) => a.orderIndex - b.orderIndex));
       setCurrentGame([])
     })
     
