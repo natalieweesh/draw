@@ -178,7 +178,6 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="sideContainer">
-        <button onClick={() => socket.disconnect()}>DISCONNECT</button>
         {poop ? <div className="modal"><div className="attentionModal">Hey! Pay attention to the game!<button className="button" onClick={() => {setPoop(false)}}>Ok</button></div></div> : null}
         <TextContainer users={users} user={user} game={currentGame} finishedGame={finishedGame} />
         {currentGame.length === 0 && users.length > 1 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
