@@ -11,8 +11,9 @@ const addUser = ({ id, name, room }) => {
   const existingUser = users.find((user) => user.room === room && user.name === name);
   // users can claim their username
   if (existingUser) {
+    console.log('found existing user', name, room)
     let timeoutId = pendingRemovals[existingUser.name];
-    console.log('there is an existing user with that name')
+    console.log('there is an existing user with that name', existingUser)
     if (timeoutId !== undefined) {
       console.log('delete the pending remova for that user')
       clearTimeout(timeoutId);
@@ -20,8 +21,12 @@ const addUser = ({ id, name, room }) => {
     }
 
     // Note that this allows account takeovers. Have fun!
-    existingUser.id = id;
-    return { user: existingUser }
+    // existingUser.id = id;
+    users.find((u) => u.room === room && u.name === name).id = id;
+    // return { user: existingUser }
+    return { user: users.find((u) => u.room === room && u.name === name) }
+  } else {
+    console.log('did not find existing user', name, room)
   }
 
   const usersInRoom = getUsersInRoom(room).length;
@@ -33,6 +38,7 @@ const addUser = ({ id, name, room }) => {
     orderIndex: usersInRoom,
     answerSubmitted: false,
   };
+  console.log('adding a new user', user)
   users.push(user);
   return { user };
 }
@@ -64,7 +70,7 @@ const removeUserByUsername = (username) => {
 
 const getUser = (id) => users.find((user) => user.id === id);
 
-const getUsersInRoom = (room) => users.filter((user) => user.room === room);
+const getUsersInRoom = (room) => users.filter((user) => user.room === room).sort((a, b) => a.orderIndex - b.orderIndex);
 
 const shuffleAndGetUsersInRoom = (room) => {
   const roomUsers = users.filter((u) => u.room === room);
@@ -82,7 +88,7 @@ const shuffleAndGetUsersInRoom = (room) => {
     randomNums.splice(r, 1);
   }
   console.log('users after', users.filter((u) => u.room === room));
-  return users.filter((u) => u.room === room);
+  return users.filter((u) => u.room === room).sort((a, b) => a.orderIndex - b.orderIndex);
 }
 
 const setReadyToPlay = (id) => {

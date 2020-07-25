@@ -21,6 +21,7 @@ const Chat = ({ location }) => {
   const [currentGame, setCurrentGame] = useState([]);
   const [newRound, setNewRound] = useState(false);
   const [finishedGame, setFinishedGame] = useState(false);
+  const [poop, setPoop] = useState(false);
 
   // TODO: change this for prod / dev
   // const ENDPOINT = 'localhost:5000';
@@ -51,9 +52,11 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.off('roomData').on('roomData', ({ users }) => {
-      setUsers(users.sort((a, b) => a.orderIndex - b.orderIndex));
+      console.log('Room Data', users)
+      setUsers(users);
     })
     socket.off('gameStatus').on('gameStatus', ({ game }) => {
+      console.log('Game Status', game);
       if (currentGame.length === 0 && !!game) {
         setCurrentGame(game.cards);
         if (newRound !== game.newRound) {
@@ -65,7 +68,7 @@ const Chat = ({ location }) => {
     socket.off('gameRestarted').on('gameRestarted', ({ users }) => {
       setFinishedGame(false)
       setNewRound(false)
-      setUsers(users.sort((a, b) => a.orderIndex - b.orderIndex));
+      setUsers(users);
       setCurrentGame([])
     })
     
@@ -73,6 +76,9 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.off('disconnect').on('disconnect', () => {
+      // if(!alert('ack! you have been disconnected!')){window.location.reload();}
+      // if(!alert('ack youve been disconnected')){setPoop(true)}
+      setPoop(true);
       const reconnectFrontEnd = () => {
         const { name, room } = queryString.parse(location.search);
         socket.connect()
@@ -172,6 +178,8 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="sideContainer">
+        <button onClick={() => socket.disconnect()}>DISCONNECT</button>
+        {poop ? <div className="modal"><div className="attentionModal">Hey! Pay attention to the game!<button className="button" onClick={() => {setPoop(false)}}>Ok</button></div></div> : null}
         <TextContainer users={users} user={user} game={currentGame} finishedGame={finishedGame} />
         {currentGame.length === 0 && users.length > 1 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
         {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}

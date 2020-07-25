@@ -134,7 +134,7 @@ io.on('connection', (socket) => {
   socket.on('initiateGame', (callback) => {
     try {
       const user = getUser(socket.id);
-      const games = addGame(user.room, shuffleAndGetUsersInRoom(user.room));
+      const games = addGame(user.room, getUsersInRoom(user.room));
       scheduleRemoveGame(user.room, getUsersInRoom)
       if (!!games) {
         callback();
