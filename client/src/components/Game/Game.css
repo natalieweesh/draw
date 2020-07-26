@@ -6,6 +6,7 @@
   max-height: none;
   transform: scale(1);
   margin: 0 auto;
+  justify-content: center;
 }
 .game .canvas-container {
   margin: 0 auto;
@@ -74,7 +75,6 @@
 @media (min-width: 846px) {
   .game {
     height: 85%;
-    justify-content: center;
     align-items: center;
     width: 45%;
     margin-right: 2rem;
