@@ -1,13 +1,15 @@
 .game {
   background: #e0e2e4;
-  height: 85%;
-  margin-right: 2rem;
-  justify-content: center;
-  align-items: center;
-  width: 45%;
-  max-height: 90vh;
+  width: 100%;
+  flex-grow: 1;
+  min-height: 450px;
+  max-height: none;
+  transform: scale(1);
+  margin: 0 auto;
 }
-
+.game .canvas-container {
+  margin: 0 auto;
+}
 .game > div {
   padding: 2rem 0;
   min-width: 375px;
@@ -52,21 +54,49 @@
   padding: 0 1.5rem;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 845px) {
   .previousStep {
     width: auto;
-  }
-  .game {
-    width: 100%;
-    flex-grow: 1;
-    min-height: 450px;
-    margin: 0 0 2rem;
-    max-height: none;
   }
   .sendButtonSmall {
     width: 20%;
   }
   .gameOver > div {
     padding: 0;
+  }
+}
+@media (min-width: 600px) {
+  .game .canvas-container {
+    margin: 2rem auto 3rem;
+    transform: scale(1.2);
+  }
+}
+@media (min-width: 846px) {
+  .game {
+    height: 85%;
+    justify-content: center;
+    align-items: center;
+    width: 45%;
+    margin-right: 2rem;
+    max-height: 100vh;
+    overflow: auto;
+  }
+  .game .canvas-container {
+    transform: scale(1);
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .game .canvas-container {
+    margin: 2rem auto 3rem;
+    transform: scale(1.2);
+  }
+}
+
+@media (min-width: 1200px) {
+  .game .canvas-container {
+    margin: 4rem auto 5rem;
+    transform: scale(1.3);
   }
 }

@@ -4,6 +4,7 @@
   background: white;
   justify-content: space-between;
   min-height: 5rem;
+  width: 100%;
 }
 
 .input {

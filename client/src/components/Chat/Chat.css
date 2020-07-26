@@ -50,7 +50,7 @@
   text-align: center;;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 845px) {
   .outerContainer {
     flex-direction: column;
     justify-content: space-evenly;
