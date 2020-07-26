@@ -34,13 +34,13 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
         <div className="gameOver">
           {game.map((card, j) => {
             return <div className='mb-20' key={j}>
-              <h1>{`${users.find((user) => user.orderIndex === card.startTurnIndex).name}'s chain:`}</h1>
+              <h1>{`${users.find((user) => user.orderIndex === card.startTurnIndex) ? users.find((user) => user.orderIndex === card.startTurnIndex).name : '?'}'s chain:`}</h1>
               <div>
               {card.steps.map((step, i) => {
                 if (step.includes('data:image')) {
-                  return <div className="step" key={i}><span>{i+1}.</span><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></div>
+                  return <div className="step" key={i}><span>{i+1}. ({card.names[i]})</span><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></div>
                 } else {
-                  return <div className="step" key={i}><div><span>{i+1}.</span><span className="bigger">{step}</span></div></div>
+                  return <div className="step" key={i}><div><span>{i+1}.</span><span className="bigger">{step}</span><span>({card.names[i]})</span></div></div>
                 }
               })}
             </div></div>

@@ -102,7 +102,7 @@ io.on('connection', (socket) => {
       const user = getUser(socket.id);
       user.answerSubmitted = true;
 
-      updateCard(user.room, word, startTurnIndex, getUsersInRoom(user.room).length, getUsersInRoom(user.room));
+      updateCard(user.room, word, startTurnIndex, getUsersInRoom(user.room).length, getUsersInRoom(user.room), user.name);
 
       io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
 

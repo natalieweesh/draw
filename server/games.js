@@ -18,6 +18,7 @@ const addGame = (room, users) => {
       currentTurnIndex: i,
       steps: [],
       submitted: false,
+      names: [],
     }
     newCards.push(card);
   })
@@ -50,10 +51,11 @@ const restartGame = (room, users) => {
 
 const getGame = (id) => games.find((game) => game.id === id);
 
-const updateCard = (room, word, startTurnIndex, numOfUsers, users) => {
+const updateCard = (room, word, startTurnIndex, numOfUsers, users, myName) => {
   let game = games.find((game) => game.id === room);
   let card = game.cards.find((card) => card.startTurnIndex === startTurnIndex);
   card.steps.push(word);
+  card.names.push(myName);
   card.submitted = true;
   console.log('updated games?')
   console.log(games)
