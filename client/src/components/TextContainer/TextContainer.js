@@ -17,7 +17,8 @@ const TextContainer = ({ users, game, finishedGame }) => {
           ? (
             <div>
               <p>{currentRound && totalRounds && `Round ${currentRound} of ${totalRounds}`}</p>
-              {game.length > 0 ? (finishedGame ? "Game Over" : "Submitted?") : "Currently playing:"}
+              <p>{game.length > 0 && finishedGame && "Game over"}</p>
+              {game.length > 0 ? (finishedGame ? "Play again?" : "Submitted?") : "Currently playing:"}
               <div className="activeContainer">
                 {users.map((user) => {
                   let card;
@@ -26,7 +27,7 @@ const TextContainer = ({ users, game, finishedGame }) => {
                   }
                   return <div key={user.name} className="activeItem">
                     <div>{user.name}</div>
-                    {((card && card.submitted) || (game.length === 0 && user.readyToPlay)) && <div className="greenDot"></div>}
+                    {((card && card.submitted && !finishedGame) || (game.length === 0 && user.readyToPlay) || (game.length > 0 && finishedGame && user.readyToRestart)) && <div className="greenDot"></div>}
                   </div>
                 })}
               </div>

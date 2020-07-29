@@ -174,6 +174,13 @@ const Chat = ({ location }) => {
     })
   }
 
+  const userRestart = (event) => {
+    event.preventDefault();
+
+    socket.emit('setReadyToRestart', () => {
+    })
+  }
+
   const user = users.find((user) => user.name === name);
   return (
     <div className="outerContainer">
@@ -181,7 +188,7 @@ const Chat = ({ location }) => {
         {poop ? <div className="modal"><div className="attentionModal">Hey! Pay attention to the game!<button className="button" onClick={() => {setPoop(false)}}>Ok</button></div></div> : null}
         <TextContainer users={users} user={user} game={currentGame} finishedGame={finishedGame} />
         {currentGame.length === 0 && users.length > 1 && <button className="startButton" disabled={user?.readyToPlay} onClick={updateUserStatus}>{user?.readyToPlay ? 'Waiting for other players' : 'Ready to play!'}</button>}
-        {finishedGame && <div className="sideContainer"><button className="startButton" onClick={restartGame}>Play again!</button></div>}
+        {finishedGame && <div className="sideContainer"><button className="startButton" disabled={user?.readyToRestart} onClick={userRestart}>{user?.readyToRestart ? 'Waiting for other players' : 'Play again!'}</button></div>}
       </div>
       {currentGame.length > 0 && user ? <Game newRound={newRound} finishedGame={finishedGame} game={currentGame} submitWord={submitWord} user={user} users={users} /> : null}
       <div className="container max-height">

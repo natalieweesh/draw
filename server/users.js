@@ -37,6 +37,7 @@ const addUser = ({ id, name, room }) => {
     readyToPlay: false,
     orderIndex: usersInRoom,
     answerSubmitted: false,
+    readyToRestart: false,
   };
   console.log('adding a new user', user)
   users.push(user);
@@ -92,13 +93,27 @@ const shuffleAndGetUsersInRoom = (room) => {
 }
 
 const setReadyToPlay = (id) => {
-  console.log('id', id)
+  console.log('setReadyToPlay: id', id)
   let myUser = users.find((user) => {
     user.id === id
   })
   users.find((user) => user.id === id).readyToPlay = true;
   console.log(users.find((user) => user.id === id).readyToPlay)
   console.log('myuser', myUser)
+}
+
+const setReadyToRestart = (id) => {
+  console.log('setReadyToRestart: id', id)
+  let myUser = users.find((user) => {
+    user.id === id
+  })
+  users.find((user) => user.id === id).readyToRestart = true;
+  console.log(users.find((user) => user.id === id).readyToRestart)
+  console.log('myuser', myUser)
+}
+
+const setAllNotReadyToRestart = (room) => {
+  users.filter((user) => user.room === room).map((u) => u.readyToRestart = false);
 }
 
 const checkAllReadyToPlay = (room) => {
@@ -108,4 +123,11 @@ const checkAllReadyToPlay = (room) => {
   return usersInRoom === usersReadyToPlay;
 }
 
-module.exports = { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser, removeUserByUsername, shuffleAndGetUsersInRoom };
+const checkAllReadyToRestart = (room) => {
+  const usersInRoom = users.filter((user) => user.room === room).length;
+  const usersReadyToRestart = users.filter((user) => user.room === room && user.readyToRestart).length;
+  console.log('all players in room are ready to restart', usersInRoom === usersReadyToRestart)
+  return usersInRoom === usersReadyToRestart;
+}
+
+module.exports = { addUser, getUser, getUsersInRoom, setReadyToPlay, setReadyToRestart, setAllNotReadyToRestart, checkAllReadyToPlay, checkAllReadyToRestart, scheduleRemoveUser, removeUserByUsername, shuffleAndGetUsersInRoom };

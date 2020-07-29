@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 const http = require('http');
 const cors = require('cors');
 
-const { addUser, getUser, getUsersInRoom, setReadyToPlay, checkAllReadyToPlay, scheduleRemoveUser, shuffleAndGetUsersInRoom } = require('./users.js');
+const { addUser, getUser, getUsersInRoom, setReadyToPlay, setReadyToRestart, setAllNotReadyToRestart, checkAllReadyToPlay, checkAllReadyToRestart, scheduleRemoveUser, shuffleAndGetUsersInRoom } = require('./users.js');
 const { addGame, getGame, updateCard, restartGame, removeGame, scheduleRemoveGame } = require('./games.js');
 
 const PORT = process.env.PORT || 5000;
@@ -128,6 +128,33 @@ io.on('connection', (socket) => {
       callback();
     } catch (e) {
       console.log('error in setReadyToPlay socket', e)
+    }
+  })
+
+  socket.on('setReadyToRestart', (callback) => {
+    try {
+      const user = getUser(socket.id);
+      setReadyToRestart(socket.id);
+
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+
+      //check if all users in room have set ready to restart
+      if (checkAllReadyToRestart(user.room)) {
+
+        restartGame(user.room, getUsersInRoom(user.room));
+        const games = addGame(user.room, shuffleAndGetUsersInRoom(user.room))
+        io.to(user.room).emit('gameRestarted', {room: user.room, users: getUsersInRoom(user.room)})
+        setAllNotReadyToRestart(user.room);
+        if (!!games) {
+          io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+          io.to(user.room).emit('gameStatus', { room: user.room, game: getGame(user.room) })
+        }
+      }
+
+      callback();
+
+    } catch (e) {
+      console.log('error in setReadyToRestart socket', e)
     }
   })
 
