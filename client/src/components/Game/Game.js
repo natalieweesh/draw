@@ -38,9 +38,9 @@ const Game = ({ game, user, submitWord, newRound, finishedGame, users }) => {
               <div>
               {card.steps.map((step, i) => {
                 if (step.includes('data:image')) {
-                  return <div className="step" key={i}><span>{i+1}. ({card.names[i]})</span><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></div>
+                  return <div><div className={`step ${(i+1)%2===0 ? 'even' : 'odd'}`} key={i}><Canvas className={'no-draw'} id={`${j}-canvas-${i}`} json={step} /></div><span class="name">{card.names[i]}</span></div>
                 } else {
-                  return <div className="step" key={i}><div><span>{i+1}.</span><span className="bigger">{step}</span><span>({card.names[i]})</span></div></div>
+                  return <div><div className={`step ${(i+1)%2===0 ? 'even' : 'odd'}`} key={i}><div><span className="bigger">{step}</span></div></div><span class="name">{card.names[i]}</span></div>
                 }
               })}
             </div></div>

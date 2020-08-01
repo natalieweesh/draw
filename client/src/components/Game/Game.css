@@ -25,10 +25,56 @@
 .gameOver .bigger {
   font-size: 1.5rem;
   display: inline-block;
+  padding: 1rem 2rem;
+}
+
+.gameOver > div {
+  padding: 1rem;
+}
+.gameOver h1, .gameOver span {
+  padding-left: 1rem;
 }
 
 .gameOver .step {
-  margin: 1rem 0;
+  margin: 1rem;
+  border-radius: 20px;
+  position: relative;
+  background: #29ff8b;
+}
+.gameOver .step.even {
+  background: #2979FF;
+}
+.gameOver span.name {
+  font-size: 1.25rem;
+  display: block;
+  width: 100%;
+  padding: 1rem 2rem;
+  text-align: right;
+}
+.gameOver .step.even~span.name {
+  text-align: left;
+}
+
+.gameOver .step:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #29ff8b;
+  border-top: 10px solid #29ff8b;
+  border-bottom: 10px solid transparent;
+  right: 19px;
+  bottom: -19px;
+}
+
+.gameOver .step.even:before {
+  left: 19px;
+  right: auto;
+  border-right: 10px solid transparent;
+  border-left: 10px solid #2979FF;
+  border-top: 10px solid #2979FF;
+  border-bottom: 10px solid transparent;
 }
 
 .sendButtonSmall {
@@ -38,12 +84,7 @@
 .previousStep {
   font-size: 1.5rem;
 }
-.gameOver > div {
-  padding: 1rem;
-}
-.gameOver h1, .gameOver span {
-  padding-left: 1rem;
-}
+
 .mb-20 {
   margin-bottom: 4rem;
 }
@@ -53,6 +94,15 @@
 }
 .paddedGame {
   padding: 0 1.5rem;
+}
+
+.gameOver .no-draw canvas {
+  width: 90%;
+  height: auto;
+  margin: 2rem auto;
+  max-width: 450px;
+  max-height: 450px;
+  transform: scale(1);
 }
 
 @media (max-width: 845px) {
